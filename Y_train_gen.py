@@ -2,11 +2,13 @@
 import os
 import json
 import pickle
+import numpy as np
 import sys
 if __name__ == '__main__':
     time = 0
     THE_FOLDER = "./"
-    Y_train = []
+    Y_train = np.zeros((3868315))
+    j = 0
     for the_dir in os.listdir(THE_FOLDER):
         
         if not os.path.isdir(the_dir):
@@ -36,7 +38,12 @@ if __name__ == '__main__':
         d = length-vi
         y_train = y_train + [0]*d        
         #print(y_train)
-        Y_train.append(y_train)
+        for i in range(length):
+            #print(np.array([x[i:i+5] for x in data]))
+            Y_train[i] = y_train[i]
+            #print("XJ")
+            #print(X_train[j])
+            j += 1
         time += 1
     with open("Y_train.pickle", "wb") as pkfile:
         pickle.dump(Y_train, pkfile)
