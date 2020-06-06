@@ -3,12 +3,15 @@ import os
 import json
 import pickle
 import numpy as np
+import random as rd
 import sys
 if __name__ == '__main__':
     o=0
+    z=0
     j = 0
     THE_FOLDER = "./"
-    Y_train = np.zeros((3868315))
+    Y_train = []
+    Y_in = []
     for the_dir in os.listdir(THE_FOLDER):
         
         if not os.path.isdir(the_dir):
@@ -34,7 +37,6 @@ if __name__ == '__main__':
                 y_train.append(0)
                 vi += 1
             y_train.append(1)
-            o+=1
             vi += 1
         d = length-vi
         y_train = y_train + [0]*d 
@@ -42,16 +44,26 @@ if __name__ == '__main__':
         length = len(y_train)     
         for i in range(length):
             #print(np.array([x[i:i+5] for x in data]))
-            Y_train[j] = y_train[i] 
-            #print("XJ")
-            #print(X_train[j])
-            j += 1
-    P = 0
-    for k in Y_train: 
-        if k == 1:
-            P += 1
-        #print(k, end=' ')
+            if y_train[i] == 0:
+                if rd.random()<(1/12):
+                    Y_in.append(1)
+                    Y_train.append(0)
+                    z+=1
+                else:
+                    Y_in.append(0)
+            else:
+                Y_in.append(1)
+                Y_train.append(1)
+                o+=1
+    Y_in = np.array(Y_in)
+    Y_train = np.array(Y_train)
+    print(Y_in.shape,Y_train.shape)
+    print(z,o)
+
     with open("Y_train.pickle", "wb") as pkfile:
         pickle.dump(Y_train, pkfile)
+    with open("Y_in.pickle", "wb") as pkfile:
+        pickle.dump(Y_in, pkfile)
+
 
     
