@@ -59,6 +59,6 @@ for the_dir in os.listdir(THE_FOLDER):
             continue
         else:
             l_ans.append([0.016+0.032*prediction[i],0.016+0.032*prediction[i+1], mdn])
-    ans_dict[sid+the_dir] = l_ans
+    ans_dict[the_dir] = l_ans
 json.dump(ans_dict, ans_file)
 ans_file.close()
