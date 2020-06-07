@@ -11,15 +11,15 @@ import pickle
 import sys
 import statistics as st
 def mid(l,r,feat):
-    if r-l+1 % 2 ==0: 
+    if (r-l+1) % 2 == 0:
         return st.median(feat[l:r+1] + [int(500)])
     return st.median(feat[l:r+1])
-sid="song_id"
 THE_FOLDER = "./"
 ans_path = THE_FOLDER + "ans.json"
 ans_file = open(ans_path, 'w')
 ans_dict = {}
-new_model = tf.keras.models.load_model('model_66-2.model')
+new_model = tf.keras.models.load_model('model_64x3_0dense.model')
+fff = 0
 for the_dir in os.listdir(THE_FOLDER):
     print(the_dir)
     prediction = []
@@ -31,6 +31,7 @@ for the_dir in os.listdir(THE_FOLDER):
     except:
         print(the_dir)
         continue
+    fff+=1
     json_path = THE_FOLDER + "/" + the_dir + f"/{the_dir}_feature.json"
     js_file = open(json_path, 'r')
     temp = json.loads(js_file.read())
@@ -62,3 +63,4 @@ for the_dir in os.listdir(THE_FOLDER):
     ans_dict[the_dir] = l_ans
 json.dump(ans_dict, ans_file)
 ans_file.close()
+print(fff)
